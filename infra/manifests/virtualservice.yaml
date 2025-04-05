@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: orquestrador-java-21
+  namespace: projetos
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - orquestrador-java-21-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /api/
+      route:
+        - destination:
+            host: orquestrador-java-21
+            port:
+              number: 80

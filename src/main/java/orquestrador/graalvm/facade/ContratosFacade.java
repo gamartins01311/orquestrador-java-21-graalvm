@@ -7,6 +7,7 @@ import org.springframework.util.StopWatch;
 import orquestrador.graalvm.controller.domains.ContratosResponse;
 import orquestrador.graalvm.integrations.contratos.service.ContratosService;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 
 @Slf4j
@@ -16,7 +17,7 @@ public class ContratosFacade {
     @Autowired
     private ContratosService contratoService;
 
-    public ContratosResponse getAllContratosByCpfCnpjVirtualThread(final String cpfCnpj) throws Exception {
+    public List<ContratosResponse> getAllContratosByCpfCnpjVirtualThread(final String cpfCnpj) throws Exception {
         StopWatch stopwatch = new StopWatch();
         stopwatch.start("VirtualThreadCall");
 
@@ -29,7 +30,7 @@ public class ContratosFacade {
     }
 
 
-    public ContratosResponse getAllContratosByCpfCnpjSemVirtualThread(final String cpfCnpj) {
+    public List<ContratosResponse> getAllContratosByCpfCnpjSemVirtualThread(final String cpfCnpj) {
         StopWatch stopwatch = new StopWatch();
         stopwatch.start("SemVirtualThreadCall");
 

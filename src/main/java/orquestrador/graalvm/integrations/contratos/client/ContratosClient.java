@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import orquestrador.graalvm.controller.domains.ContratosResponse;
 
+import java.util.List;
+
 @FeignClient(name = "contratosClient", url = "${contratos-client.url}")
 public interface ContratosClient {
     @GetMapping("/api/contratos/vt/{cpfCnpj}")
-    ContratosResponse getContratosVirtualThread(@PathVariable("cpfCnpj") String cpfCnpj);
+    List<ContratosResponse> getContratosVirtualThread(@PathVariable("cpfCnpj") String cpfCnpj);
 
     @GetMapping("/api/contratos/novt/{cpfCnpj}")
-    ContratosResponse getContratosSemVirtualThread(@PathVariable("cpfCnpj") String cpfCnpj);
+    List<ContratosResponse> getContratosSemVirtualThread(@PathVariable("cpfCnpj") String cpfCnpj);
 }

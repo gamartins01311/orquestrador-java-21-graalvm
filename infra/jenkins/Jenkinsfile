@@ -1,0 +1,92 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'app-java-21-teste'
+        IMAGE_TAG = '1.0.0'
+        IMAGE_REGISTRY = 'localhost:5000'
+        JAVA_HOME = '/usr/lib/jvm/temurin-21-jdk-amd64'
+        PATH = "${JAVA_HOME}/bin:${PATH}"
+        BUILDER = 'paketobuildpacks/builder:tiny' // ideal para nativos
+    }
+
+    stages {
+        stage('Verifica Java') {
+            steps {
+                sh 'java -version'
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                script {
+                    if (fileExists('app-java-21-teste')) {
+                        deleteDir()
+                    }
+                }
+                withCredentials([usernamePassword(credentialsId: 'github-token-credentials-id', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
+                    sh '''
+                        git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/gamartins01311/app-java-21-teste.git
+                        ls app-java-21-teste
+                    '''
+                }
+            }
+        }
+
+        stage('Build com Maven (native)') {
+            steps {
+                dir('app-java-21-teste') {
+                    sh './mvnw clean package -Pnative -DskipTests'
+                }
+            }
+        }
+
+        stage('Build Docker Image (Paketo)') {
+            steps {
+                dir('app-java-21-teste') {
+                    sh '''
+                        pack build $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
+                            --builder $BUILDER \
+                            --env BP_NATIVE_IMAGE=true \
+                            --path . \
+                            --pull-policy if-not-present
+                    '''
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker push $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG'
+            }
+        }
+
+        stage('Deploy to K3s') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig-k3', variable: 'KUBECONFIG_FILE')]) {
+                    dir('app-java-21-teste') {
+                        sh '''
+                            mkdir -p ~/.kube
+                            cp $KUBECONFIG_FILE ~/.kube/config
+                            kubectl apply -f infra/manifests/deployment.yaml
+                            kubectl apply -f infra/manifests/service.yaml
+                            kubectl apply -f infra/manifests/gateway.yaml
+                            kubectl apply -f infra/manifests/virtualservice.yaml
+                            kubectl apply -f infra/manifests/destinationrule.yaml
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                script {
+                    if (fileExists('app-java-21-teste')) {
+                        deleteDir()
+                    }
+                }
+            }
+        }
+    }
+}
