@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>orquestrador</groupId>
-	<artifactId>java.21.graalvm</artifactId>
+	<artifactId>orquestrador.java.21</artifactId>
 	<version>1.0.0</version>
-	<name>java.21.graalvm</name>
+	<name>orquestrador.java.21</name>
 	<description>Orquestrador de testes POC java 21 com Graalvm e Virtual Threads</description>
 	<properties>
 		<java.version>21</java.version>

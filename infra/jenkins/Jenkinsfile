@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'app-java-21-teste'
+        IMAGE_NAME = 'orquestrador.java.21'
         IMAGE_TAG = '1.0.0'
         IMAGE_REGISTRY = 'localhost:5000'
         JAVA_HOME = '/usr/lib/jvm/temurin-21-jdk-amd64'
         PATH = "${JAVA_HOME}/bin:${PATH}"
-        BUILDER = 'paketobuildpacks/builder:tiny' // ideal para nativos
     }
 
     stages {
@@ -20,36 +19,35 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    if (fileExists('app-java-21-teste')) {
+                    if (fileExists('orquestrador-java-21-graalvm')) {
                         deleteDir()
                     }
                 }
                 withCredentials([usernamePassword(credentialsId: 'github-token-credentials-id', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
                     sh '''
-                        git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/gamartins01311/app-java-21-teste.git
-                        ls app-java-21-teste
+                        git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/gamartins01311/orquestrador-java-21-graalvm.git
+                        ls orquestrador-java-21-graalvm
                     '''
                 }
             }
         }
 
-        stage('Build com Maven (native)') {
+        stage('Build com Maven (Native Image)') {
             steps {
-                dir('app-java-21-teste') {
-                    sh './mvnw clean package -Pnative -DskipTests'
+                dir('orquestrador-java-21-graalvm') {
+                    sh '''
+                        chmod +x ./mvnw
+                        ./mvnw clean package -Pnative -DskipTests
+                    '''
                 }
             }
         }
 
-        stage('Build Docker Image (Paketo)') {
+        stage('Build Docker Image com Binário Nativo') {
             steps {
-                dir('app-java-21-teste') {
+                dir('orquestrador-java-21-graalvm') {
                     sh '''
-                        pack build $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
-                            --builder $BUILDER \
-                            --env BP_NATIVE_IMAGE=true \
-                            --path . \
-                            --pull-policy if-not-present
+                        docker build -t $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
                     '''
                 }
             }
@@ -64,7 +62,7 @@ pipeline {
         stage('Deploy to K3s') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-k3', variable: 'KUBECONFIG_FILE')]) {
-                    dir('app-java-21-teste') {
+                    dir('orquestrador-java-21-graalvm') {
                         sh '''
                             mkdir -p ~/.kube
                             cp $KUBECONFIG_FILE ~/.kube/config
@@ -82,7 +80,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    if (fileExists('app-java-21-teste')) {
+                    if (fileExists('orquestrador-java-21-graalvm')) {
                         deleteDir()
                     }
                 }
