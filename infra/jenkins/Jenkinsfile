@@ -10,12 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Verifica Java') {
-            steps {
-                sh 'java -version'
-            }
-        }
-
         stage('Checkout') {
             steps {
                 script {
@@ -38,6 +32,7 @@ pipeline {
                     sh '''
                         chmod +x ./mvnw
                         ./mvnw clean package -Pnative -DskipTests
+                        ls -lh target/
                     '''
                 }
             }
