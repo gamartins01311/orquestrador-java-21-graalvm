@@ -23,7 +23,7 @@ spec:
             - containerPort: 8080
           env:
             - name: DD_ENV
-              value: dev
+              value: prod
             - name: DD_SERVICE
               value: orquestrador-graalvm
             - name: DD_VERSION
