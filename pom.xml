@@ -114,8 +114,9 @@
                             <OTEL_TRACES_EXPORTER>otlp</OTEL_TRACES_EXPORTER>
                             <OTEL_LOGS_EXPORTER>none</OTEL_LOGS_EXPORTER>
                             <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                --initialize-at-build-time=io.opentelemetry.sdk.common.export.RetryPolicy
-                                --initialize-at-run-time=io.opentelemetry,io.opentelemetry.exporter.otlp.trace
+                                --initialize-at-build-time=io.opentelemetry,io.opentelemetry.exporter.otlp.trace
+                                --initialize-at-run-time=io.opentelemetry.sdk.common.export.RetryPolicy
+                                --reinitialize-at-run-time=io.opentelemetry.sdk.common.export.RetryPolicy
                                 --trace-class-initialization=io.opentelemetry.sdk.common.export.RetryPolicy
                                 --report-unsupported-elements-at-runtime
                                 --allow-incomplete-classpath

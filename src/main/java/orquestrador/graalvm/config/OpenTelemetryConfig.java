@@ -9,27 +9,23 @@ import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 @Configuration
 public class OpenTelemetryConfig {
 
     @Bean
     public OpenTelemetry openTelemetry() {
-        OtlpGrpcSpanExporter spanExporter = OtlpGrpcSpanExporter.builder()
+        return OpenTelemetrySdk.builder()
+                .setTracerProvider(SdkTracerProvider.builder()
+                        .addSpanProcessor(BatchSpanProcessor.builder(createSpanExporter()).build())
+                        .setResource(Resource.getDefault())
+                        .build())
+                .build();
+    }
+
+    private OtlpGrpcSpanExporter createSpanExporter() {
+        return OtlpGrpcSpanExporter.builder()
                 .setEndpoint("http://datadog.datadog.svc.cluster.local:4317")
                 .build();
-
-
-        SdkTracerProvider tracerProvider = SdkTracerProvider.builder()
-                .addSpanProcessor(BatchSpanProcessor.builder(spanExporter).build())
-                .setResource(Resource.getDefault())
-                .build();
-
-        OpenTelemetrySdk openTelemetrySdk = OpenTelemetrySdk.builder()
-                .setTracerProvider(tracerProvider)
-                .build();
-
-        return openTelemetrySdk;
     }
 
     @Bean
@@ -37,3 +33,4 @@ public class OpenTelemetryConfig {
         return openTelemetry.getTracer("orquestrador");
     }
 }
+
