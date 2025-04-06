@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: orquestrador-java-21-gateway
+  name: proxy-resource-gateway
   namespace: projetos
 spec:
   selector:
