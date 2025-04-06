@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -83,19 +83,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <image>
-                        <builder>paketobuildpacks/builder-jammy-base</builder>
-                        <env>
-                            <BP_DATADOG_ENABLED>true</BP_DATADOG_ENABLED>
-                            <BP_DATADOG_API_KEY>${env.DATADOG_API_KEY}</BP_DATADOG_API_KEY>
-                            <BP_JAVAAGENT>https://dtdg.co/latest-java-tracer</BP_JAVAAGENT>
-                            <BP_JVM_VERSION>21</BP_JVM_VERSION>
-                            <JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
-                        </env>
-                    </image>
-                </configuration>
             </plugin>
+
 
 
         </plugins>
