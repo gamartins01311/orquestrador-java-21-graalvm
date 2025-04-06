@@ -15,9 +15,6 @@ spec:
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.1
+          image: localhost:5000/orquestrador.java.21:1.0.2
           ports:
             - containerPort: 8080
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "prod"
