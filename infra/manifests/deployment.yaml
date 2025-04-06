@@ -19,21 +19,23 @@ spec:
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.7
+          image: localhost:5000/orquestrador.java.21:1.0.8
           ports:
             - containerPort: 8080
           env:
-            - name: DD_ENV
-              value: prod
-            - name: DD_SERVICE
+            - name: OTEL_SERVICE_NAME
               value: orquestrador-graalvm
-            - name: DD_VERSION
-              value: "1.0.0"
-            - name: DD_AGENT_HOST
-              value: datadog.datadog.svc.cluster.local
-            - name: DD_TRACE_AGENT_PORT
-              value: "8126"
-            - name: DD_LOGS_INJECTION
-              value: "true"
-            - name: DD_TRACE_ENABLED
-              value: "true"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://datadog.datadog.svc.cluster.local:4317
+            - name: OTEL_TRACES_EXPORTER
+              value: otlp
+            - name: OTEL_METRICS_EXPORTER
+              value: none
+            - name: OTEL_LOGS_EXPORTER
+              value: none
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=1.0.0,env=prod,service.name=orquestrador-graalvm
+            - name: JAVA_TOOL_OPTIONS
+              value: >-
+                -javaagent:/workspace/app/opentelemetry-javaagent.jar
+                -Dotel.java.global-autoconfigure.enabled=true
