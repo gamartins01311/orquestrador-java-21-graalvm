@@ -13,7 +13,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Graalvm e Virtual Threads</description>
 
@@ -91,20 +91,7 @@
                         <env>
                             <BP_JVM_VERSION>21</BP_JVM_VERSION>
                             <JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
-                            <BPL_JVM_HEAD_ROOM>0</BPL_JVM_HEAD_ROOM>
-                            <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
-                            <BPL_JVM_DIRECT_MEMORY_SIZE>64M</BPL_JVM_DIRECT_MEMORY_SIZE>
-                            <BPL_JAVAAGENT>https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar</BPL_JAVAAGENT>
-                            <OTEL_SERVICE_NAME>orquestrador-graalvm</OTEL_SERVICE_NAME>
-                            <OTEL_EXPORTER_OTLP_ENDPOINT>http://datadog.datadog.svc.cluster.local:4317</OTEL_EXPORTER_OTLP_ENDPOINT>
-                            <OTEL_METRICS_EXPORTER>none</OTEL_METRICS_EXPORTER>
-                            <OTEL_TRACES_EXPORTER>otlp</OTEL_TRACES_EXPORTER>
-                            <OTEL_LOGS_EXPORTER>none</OTEL_LOGS_EXPORTER>
                             <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
-                                --initialize-at-build-time=io.opentelemetry,io.opentelemetry.exporter.otlp.trace
-                                --initialize-at-run-time=io.opentelemetry.sdk,io.opentelemetry.exporter.otlp
-                                --reinitialize-at-run-time=io.opentelemetry.sdk.common.export.RetryPolicy
-                                --trace-class-initialization=io.opentelemetry.sdk.common.export.RetryPolicy
                                 --report-unsupported-elements-at-runtime
                                 --allow-incomplete-classpath
                             </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
