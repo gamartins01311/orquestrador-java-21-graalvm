@@ -58,7 +58,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<builder>paketobuildpacks/builder:base-jammy</builder>
+						<builder>paketobuildpacks/builder-jammy-base</builder>
 						<env>
 							<BP_JVM_VERSION>21</BP_JVM_VERSION>
 							<JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
