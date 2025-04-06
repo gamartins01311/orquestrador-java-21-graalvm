@@ -10,13 +10,29 @@
     </parent>
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Graalvm e Virtual Threads</description>
     <properties>
         <java.version>21</java.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk</artifactId>
+            <version>1.49.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
+            <version>1.49.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-spring-boot-starter</artifactId>
+            <version>1.22.1-alpha</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -76,8 +92,12 @@
                             <OTEL_METRICS_EXPORTER>none</OTEL_METRICS_EXPORTER>
                             <OTEL_TRACES_EXPORTER>otlp</OTEL_TRACES_EXPORTER>
                             <OTEL_LOGS_EXPORTER>none</OTEL_LOGS_EXPORTER>
+                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                --initialize-at-build-time=io.opentelemetry
+                                --report-unsupported-elements-at-runtime
+                                --allow-incomplete-classpath
+                            </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                         </env>
-
                     </image>
                     <excludes>
                         <exclude>
@@ -87,6 +107,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
