@@ -2,12 +2,20 @@ pipeline {
     agent any
 
     environment {
+        JAVA_HOME = '/opt/graalvm'
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
         IMAGE_NAME = 'orquestrador.java.21'
         IMAGE_TAG = '1.0.0'
         IMAGE_REGISTRY = 'localhost:5000'
     }
 
     stages {
+        stage('Verificar Java') {
+            steps {
+                sh 'java -version'
+            }
+        }
+
         stage('Checkout') {
             steps {
                 script {
@@ -24,32 +32,20 @@ pipeline {
             }
         }
 
-        stage('Build com Paketo (Native Image)') {
+        stage('Build com Maven + Paketo (Native Image)') {
             steps {
                 dir('orquestrador-java-21-graalvm') {
                     sh '''
-                        pack build $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
-                            --path . \
-                            --builder paketobuildpacks/builder:base \
-                            --buildpack paketo-buildpacks/oracle \
-                            --env BP_NATIVE_IMAGE=true \
-                            --env BP_NATIVE_IMAGE_BUILD_ARGUMENTS='-DskipTests' \
-                            --publish
+                        chmod +x ./mvnw
+                        ./mvnw spring-boot:build-image \
+                            -Pnative \
+                            -Dspring-boot.build-image.imageName=$IMAGE_NAME:$IMAGE_TAG \
+                            -DskipTests
                     '''
                 }
             }
         }
 
-
-        stage('Build Docker Image com Binário Nativo') {
-            steps {
-                dir('orquestrador-java-21-graalvm') {
-                    sh '''
-                        docker build -f Dockerfile.native -t $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
-                    '''
-                }
-            }
-        }
 
         stage('Push Docker Image') {
             steps {
