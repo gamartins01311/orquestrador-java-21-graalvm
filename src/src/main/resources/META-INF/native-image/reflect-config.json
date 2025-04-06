@@ -1,8 +1,0 @@
-[
-  {
-    "name": "io.opentelemetry.sdk.common.export.RetryPolicy",
-    "allDeclaredConstructors": true,
-    "allDeclaredMethods": true,
-    "allDeclaredFields": true
-  }
-]

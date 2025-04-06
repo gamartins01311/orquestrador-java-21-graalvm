@@ -23,6 +23,7 @@ public class OpenTelemetryConfig {
     }
 
     private OtlpGrpcSpanExporter createSpanExporter() {
+        System.out.println(">> Criando Exporter em runtime!");
         return OtlpGrpcSpanExporter.builder()
                 .setEndpoint("http://datadog.datadog.svc.cluster.local:4317")
                 .build();
