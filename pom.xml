@@ -36,6 +36,11 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>4.2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -65,6 +70,17 @@
 							<BPL_JVM_HEAD_ROOM>0</BPL_JVM_HEAD_ROOM>
 							<BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
 							<BPL_JVM_DIRECT_MEMORY_SIZE>64M</BPL_JVM_DIRECT_MEMORY_SIZE>
+							<BPL_JAVAAGENT>https://dtdg.co/latest-java-tracer</BPL_JAVAAGENT>
+							<BPL_JAVA_OPTS>
+								-Ddd.env=dev
+								-Ddd.service=orquestrador-graalvm
+								-Ddd.version=1.0.0
+								-Ddd.trace.enabled=true
+								-Ddd.logs.injection=true
+								-Ddd.profiling.enabled=true
+								-Ddd.agent.host=datadog.datadog.svc.cluster.local
+								-Ddd.agent.port=8126
+							</BPL_JAVA_OPTS>
 						</env>
 					</image>
 					<excludes>
@@ -75,7 +91,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.graalvm.buildtools</groupId>
 				<artifactId>native-maven-plugin</artifactId>
