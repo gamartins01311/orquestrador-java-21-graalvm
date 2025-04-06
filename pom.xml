@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>orquestrador</groupId>
 	<artifactId>orquestrador.java.21</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<name>orquestrador.java.21</name>
 	<description>Orquestrador de testes POC java 21 com Graalvm e Virtual Threads</description>
 	<properties>

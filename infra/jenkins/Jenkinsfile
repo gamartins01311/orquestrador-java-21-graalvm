@@ -5,7 +5,7 @@ pipeline {
         JAVA_HOME = '/opt/graalvm'
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
         IMAGE_NAME = 'orquestrador.java.21'
-        IMAGE_TAG = '1.0.3'
+        IMAGE_TAG = '1.0.4'
         IMAGE_REGISTRY = 'localhost:5000'
     }
 
