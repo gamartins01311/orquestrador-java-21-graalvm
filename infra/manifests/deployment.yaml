@@ -15,13 +15,13 @@ spec:
       labels:
         app: orquestrador-java-21
         tags.datadoghq.com/env: prod
-        tags.datadoghq.com/service: orquestrador-graalvm
-        tags.datadoghq.com/version: "1.0.0"
+        tags.datadoghq.com/service: orquestrador-java
+        tags.datadoghq.com/version: "1.0.14"
         admission.datadoghq.com/enabled: "true"
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.13
+          image: localhost:5000/orquestrador.java.21:1.0.14
           ports:
             - containerPort: 8080
           env:
@@ -37,8 +37,6 @@ spec:
               value: "true"
             - name: DD_TRACE_SAMPLE_RATE
               value: "1"
-            - name: DD_LOGS_INJECTION
-              value: "true"
             - name: DATADOG_API_KEY
               valueFrom:
                 secretKeyRef:
