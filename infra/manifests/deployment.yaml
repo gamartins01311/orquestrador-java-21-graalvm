@@ -23,19 +23,13 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: OTEL_SERVICE_NAME
-              value: orquestrador-graalvm
-            - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://datadog.datadog.svc.cluster.local:4317
-            - name: OTEL_TRACES_EXPORTER
-              value: otlp
-            - name: OTEL_METRICS_EXPORTER
-              value: none
-            - name: OTEL_LOGS_EXPORTER
-              value: none
-            - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.version=1.0.0,env=prod,service.name=orquestrador-graalvm
-            - name: JAVA_TOOL_OPTIONS
-              value: >-
-                -javaagent:/workspace/app/opentelemetry-javaagent.jar
-                -Dotel.java.global-autoconfigure.enabled=true
+            - name: DATADOG_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datadog-secret
+                  key: api-key
+            - name: DATADOG_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datadog-secret
+                  key: app-key
