@@ -1,17 +1,19 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: orquestrador-java-21
+  name: proxy-resource-vs
   namespace: projetos
 spec:
   hosts:
     - "*"
   gateways:
-    - orquestrador-java-21-gateway
+    - proxy-resource-gateway
   http:
     - match:
         - uri:
-            prefix: /api/
+            prefix: /orquestrador/
+      rewrite:
+        uri: /
       route:
         - destination:
             host: orquestrador-java-21

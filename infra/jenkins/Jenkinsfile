@@ -39,12 +39,13 @@ pipeline {
                         chmod +x ./mvnw
                         ./mvnw spring-boot:build-image \
                             -Pnative \
-                            -Dspring-boot.build-image.imageName=$IMAGE_NAME:$IMAGE_TAG \
+                            -Dspring-boot.build-image.imageName=$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
                             -DskipTests
                     '''
                 }
             }
         }
+
 
 
         stage('Push Docker Image') {

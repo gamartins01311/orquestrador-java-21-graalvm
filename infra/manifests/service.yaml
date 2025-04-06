@@ -7,6 +7,7 @@ spec:
   selector:
     app: orquestrador-java-21
   ports:
-    - protocol: TCP
+    - name: http
       port: 80
       targetPort: 8080
+      protocol: TCP
