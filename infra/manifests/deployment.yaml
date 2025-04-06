@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.9
+          image: localhost:5000/orquestrador.java.21:1.0.10
           ports:
             - containerPort: 8080
           env:
