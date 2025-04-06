@@ -39,3 +39,13 @@ spec:
               value: >-
                 -javaagent:/workspace/app/opentelemetry-javaagent.jar
                 -Dotel.java.global-autoconfigure.enabled=true
+            - name: DATADOG_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datadog-secret
+                  key: api-key
+            - name: DATADOG_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datadog-secret
+                  key: app-key
