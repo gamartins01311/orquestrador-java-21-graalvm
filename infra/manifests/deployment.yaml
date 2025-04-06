@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.3
+          image: localhost:5000/orquestrador.java.21:1.0.4
           ports:
             - containerPort: 8080
           env:
@@ -36,9 +36,3 @@ spec:
               value: "true"
             - name: DD_TRACE_ENABLED
               value: "true"
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 10
