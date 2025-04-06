@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>orquestrador</groupId>
 	<artifactId>orquestrador.java.21</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.7</version>
 	<name>orquestrador.java.21</name>
 	<description>Orquestrador de testes POC java 21 com Graalvm e Virtual Threads</description>
 	<properties>
@@ -65,7 +65,6 @@
 					<image>
 						<builder>paketobuildpacks/builder-jammy-base</builder>
 						<env>
-							<BP_DATADOG_ENABLED>true</BP_DATADOG_ENABLED>
 							<BP_JVM_VERSION>21</BP_JVM_VERSION>
 							<JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
 							<BPL_JVM_HEAD_ROOM>0</BPL_JVM_HEAD_ROOM>
