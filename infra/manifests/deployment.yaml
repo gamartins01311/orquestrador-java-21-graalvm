@@ -10,6 +10,8 @@ spec:
       app: orquestrador-java-21
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
       labels:
         app: orquestrador-java-21
         tags.datadoghq.com/env: prod
@@ -19,10 +21,24 @@ spec:
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.12
+          image: localhost:5000/orquestrador.java.21:1.0.13
           ports:
             - containerPort: 8080
           env:
+            - name: DD_PROFILING_ENABLED
+              value: "true"
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            - name: DD_APPSEC_ENABLED
+              value: "true"
+            - name: DD_IAST_ENABLED
+              value: "true"
+            - name: DD_APPSEC_SCA_ENABLED
+              value: "true"
+            - name: DD_TRACE_SAMPLE_RATE
+              value: "1"
+            - name: DD_LOGS_INJECTION
+              value: "true"
             - name: DATADOG_API_KEY
               valueFrom:
                 secretKeyRef:
