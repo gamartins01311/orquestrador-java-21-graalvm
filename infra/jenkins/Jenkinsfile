@@ -5,8 +5,6 @@ pipeline {
         IMAGE_NAME = 'orquestrador.java.21'
         IMAGE_TAG = '1.0.0'
         IMAGE_REGISTRY = 'localhost:5000'
-        JAVA_HOME = '/usr/lib/jvm/temurin-21-jdk-amd64'
-        PATH = "${JAVA_HOME}/bin:${PATH}"
     }
 
     stages {
@@ -20,29 +18,34 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'github-token-credentials-id', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
                     sh '''
                         git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/gamartins01311/orquestrador-java-21-graalvm.git
-                        ls orquestrador-java-21-graalvm
+                        ls -lah orquestrador-java-21-graalvm
                     '''
                 }
             }
         }
 
-        stage('Build com Maven (Native Image)') {
+        stage('Build com Paketo (Native Image)') {
             steps {
                 dir('orquestrador-java-21-graalvm') {
                     sh '''
-                        chmod +x ./mvnw
-                        ./mvnw clean package -Pnative -DskipTests
-                        ls -lh target/
+                        pack build $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
+                            --path . \
+                            --builder paketobuildpacks/builder:base \
+                            --buildpack paketo-buildpacks/oracle \
+                            --env BP_NATIVE_IMAGE=true \
+                            --env BP_NATIVE_IMAGE_BUILD_ARGUMENTS='-DskipTests' \
+                            --publish
                     '''
                 }
             }
         }
+
 
         stage('Build Docker Image com Binário Nativo') {
             steps {
                 dir('orquestrador-java-21-graalvm') {
                     sh '''
-                        docker build -t $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
+                        docker build -f Dockerfile.native -t $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
                     '''
                 }
             }
@@ -75,9 +78,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    if (fileExists('orquestrador-java-21-graalvm')) {
-                        deleteDir()
-                    }
+                    deleteDir()
                 }
             }
         }
