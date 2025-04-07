@@ -87,7 +87,7 @@
                     <image>
                         <builder>paketobuildpacks/builder-jammy-base</builder>
                         <bindings>
-                            <binding>/home/jenkins-agent/bindings/datadog-java-agent</binding>
+                            <binding>/home/jenkins-agent/bindings/datadog-java-agent:/bindings/datadog-java-agent</binding>
                         </bindings>
                         <env>
                             <BP_JVM_VERSION>21</BP_JVM_VERSION>
