@@ -1,4 +1,6 @@
-FROM busybox:glibc as graalvm-native
-COPY docker-layer/orquestrador /app/orquestrador
-COPY /home/jenkins-agent/dd-java-agent.jar /app/dd-java-agent.jar
-ENTRYPOINT ["/app/orquestrador"]
+FROM debian:bookworm-slim as graalvm-native
+
+RUN apt-get update && apt-get install -y zlib1g && apt-get clean
+
+COPY docker-layer/orquestrador.java.21 /app/orquestrador.java.21
+ENTRYPOINT ["/app/orquestrador.java.21"]
