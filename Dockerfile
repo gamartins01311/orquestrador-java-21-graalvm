@@ -1,3 +1,4 @@
 FROM busybox:glibc as graalvm-native
-COPY target/orquestrador.java.21 /app/orquestrador
+COPY docker-layer/orquestrador /app/orquestrador
+COPY /home/jenkins-agent/dd-java-agent.jar /app/dd-java-agent.jar
 ENTRYPOINT ["/app/orquestrador"]
