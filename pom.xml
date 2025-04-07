@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.19</version>
+    <version>1.0.20</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -89,6 +89,10 @@
                         <bindings>
                             <binding>/home/jenkins-agent/bindings/datadog-java-agent:/bindings/datadog-java-agent</binding>
                         </bindings>
+                        <buildpacks>
+                            <buildpack>docker.io/paketobuildpacks/oracle</buildpack>
+                            <buildpack>urn:cnb:builder:paketo-buildpacks/java-native-image</buildpack>
+                        </buildpacks>
                         <env>
                             <BP_DATADOG_ENABLED>true</BP_DATADOG_ENABLED>
                             <BP_JVM_VERSION>21</BP_JVM_VERSION>
