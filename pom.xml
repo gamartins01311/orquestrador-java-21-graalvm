@@ -79,24 +79,23 @@
                 </configuration>
             </plugin>
 
-            <!-- Spring Boot Plugin + Buildpack (Paketo JVM com Datadog) -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-image</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <image>
                         <builder>paketobuildpacks/builder-jammy-full</builder>
                         <bindings>/home/jenkins-agent/bindings</bindings>
                         <env>
+                            <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                            <JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
                             <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                --report-unsupported-elements-at-runtime
+                                --allow-incomplete-classpath
+                            </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                         </env>
+
                     </image>
                 </configuration>
             </plugin>
