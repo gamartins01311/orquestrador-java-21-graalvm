@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.23</version>
+    <version>1.0.24</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -96,7 +96,6 @@
             <id>native</id>
             <build>
                 <plugins>
-                    <!-- GraalVM Native Build Plugin -->
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
@@ -114,6 +113,7 @@
                             <buildArgs>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
+                                <buildArg>-J-javaagent:/home/jenkins-agent/dd-java-agent.jar</buildArg>
                             </buildArgs>
                         </configuration>
                     </plugin>
@@ -121,4 +121,5 @@
             </build>
         </profile>
     </profiles>
+
 </project>
