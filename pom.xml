@@ -101,7 +101,20 @@
                     </image>
                 </configuration>
             </plugin>
-            
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <imageName>orquestrador</imageName>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
