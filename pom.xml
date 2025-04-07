@@ -120,6 +120,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
+                            <mainClass>orquestrador.graalvm.Application</mainClass>
                             <buildArgs>
                                 <buildArg>-J-javaagent=/home/jenkins-agent/dd-java-agent.jar</buildArg>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
@@ -132,26 +133,25 @@
 
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>native</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>0.9.27</version>
-                        <configuration>
-                            <buildArgs>
-                                <buildArg>-J-javaagent=/home/jenkins-agent/dd-java-agent.jar</buildArg>
-                                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
-                                <buildArg>--allow-incomplete-classpath</buildArg>
-                            </buildArgs>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <profile>
+        <id>native</id>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                    <version>0.9.27</version>
+                    <configuration>
+                        <mainClass>orquestrador.graalvm.Application</mainClass>
+                        <buildArgs>
+                            <buildArg>-J-javaagent=/home/jenkins-agent/dd-java-agent.jar</buildArg>
+                            <buildArg>--report-unsupported-elements-at-runtime</buildArg>
+                        </buildArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+
 
 </project>
