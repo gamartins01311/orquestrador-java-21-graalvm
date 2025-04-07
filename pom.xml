@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.17</version>
+    <version>1.0.18</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
