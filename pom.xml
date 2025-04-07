@@ -84,12 +84,14 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <builder>paketobuildpacks/builder-jammy-full</builder>
+                        <builder>paketobuildpacks/builder-jammy-base</builder>
                         <bindings>/home/jenkins-agent/bindings</bindings>
                         <env>
                             <BP_JVM_VERSION>21</BP_JVM_VERSION>
                             <JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
-                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                            <BPL_JVM_HEAD_ROOM>0</BPL_JVM_HEAD_ROOM>
+                            <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
+                            <BPL_JVM_DIRECT_MEMORY_SIZE>64M</BPL_JVM_DIRECT_MEMORY_SIZE>
                             <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                 --report-unsupported-elements-at-runtime
                                 --allow-incomplete-classpath
@@ -99,10 +101,7 @@
                     </image>
                 </configuration>
             </plugin>
-
-
-
-
+            
         </plugins>
     </build>
 </project>
