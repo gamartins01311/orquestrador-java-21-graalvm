@@ -82,10 +82,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.4</version>
                 <configuration>
                     <image>
                         <builder>paketobuildpacks/builder-jammy-base</builder>
-                        <bindings>/home/jenkins-agent/bindings</bindings>
+                        <bindings>
+                            <binding>/home/jenkins-agent/bindings/datadog-java-agent</binding>
+                        </bindings>
                         <env>
                             <BP_JVM_VERSION>21</BP_JVM_VERSION>
                             <JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>
@@ -97,10 +100,10 @@
                                 --allow-incomplete-classpath
                             </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                         </env>
-
                     </image>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
