@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.22</version>
+    <version>1.0.23</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -79,46 +79,36 @@
                 </configuration>
             </plugin>
 
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--                <version>3.4.4</version>-->
-            <!--                <configuration>-->
-            <!--                    <image>-->
-            <!--                        <builder>paketobuildpacks/builder-jammy-base</builder>-->
-            <!--                        <bindings>-->
-            <!--                            <binding>/home/jenkins-agent/bindings/datadog-java-agent:/bindings/datadog-java-agent</binding>-->
-            <!--                        </bindings>-->
-            <!--                        <buildpacks>-->
-            <!--                            <buildpack>docker.io/paketobuildpacks/oracle</buildpack>-->
-            <!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/java-native-image</buildpack>-->
-            <!--                        </buildpacks>-->
-            <!--                        <env>-->
-            <!--                            <BP_DATADOG_ENABLED>true</BP_DATADOG_ENABLED>-->
-            <!--                            <BP_JVM_VERSION>21</BP_JVM_VERSION>-->
-            <!--                            <JAVA_TOOL_OPTIONS>-XX:+UseG1GC</JAVA_TOOL_OPTIONS>-->
-            <!--                            <BPL_JVM_HEAD_ROOM>0</BPL_JVM_HEAD_ROOM>-->
-            <!--                            <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>-->
-            <!--                            <BPL_JVM_DIRECT_MEMORY_SIZE>64M</BPL_JVM_DIRECT_MEMORY_SIZE>-->
-            <!--                            <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-->
-            <!--                                &#45;&#45;report-unsupported-elements-at-runtime-->
-            <!--                                &#45;&#45;allow-incomplete-classpath-->
-            <!--                            </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-->
-            <!--                        </env>-->
-            <!--                    </image>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
-
+            <!-- Spring Boot plugin com AOT -->
             <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-                <version>0.9.27</version>
-                <executions>
-                    <execution>
-                        <id>build-native</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.4</version>
+                <configuration>
+                    <aot>true</aot>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <!-- GraalVM Native Build Plugin -->
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.9.27</version>
+                        <executions>
+                            <execution>
+                                <id>native-image</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                         <configuration>
                             <mainClass>orquestrador.graalvm.Application</mainClass>
                             <buildArgs>
@@ -126,32 +116,9 @@
                                 <buildArg>--allow-incomplete-classpath</buildArg>
                             </buildArgs>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
-    <profiles>
-        <profile>
-            <id>native</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>0.9.27</version>
-                        <configuration>
-                            <mainClass>orquestrador.graalvm.Application</mainClass>
-                            <buildArgs>
-                                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
-                            </buildArgs>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
-
 </project>
