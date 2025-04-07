@@ -122,7 +122,6 @@
                         <configuration>
                             <mainClass>orquestrador.graalvm.Application</mainClass>
                             <buildArgs>
-                                <buildArg>-J-javaagent=/home/jenkins-agent/dd-java-agent.jar</buildArg>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
                             </buildArgs>
@@ -145,7 +144,6 @@
                         <configuration>
                             <mainClass>orquestrador.graalvm.Application</mainClass>
                             <buildArgs>
-                                <buildArg>-J-javaagent=/home/jenkins-agent/dd-java-agent.jar</buildArg>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                             </buildArgs>
                         </configuration>
