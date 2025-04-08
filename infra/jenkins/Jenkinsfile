@@ -5,7 +5,7 @@ pipeline {
         JAVA_HOME = '/opt/graalvm'
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
         IMAGE_NAME = 'orquestrador.java.21'
-        IMAGE_TAG = '1.0.17'
+        IMAGE_TAG = '1.0.27'
         IMAGE_REGISTRY = 'localhost:5000'
     }
 
@@ -32,28 +32,17 @@ pipeline {
             }
         }
 
-        stage('Preparar Binding do Datadog') {
-            steps {
-                sh '''
-                    mkdir -p /tmp/bindings/datadog-java-agent/env
-                    echo "java-agent" > /tmp/bindings/datadog-java-agent/type
-                    cp /home/dd-java-agent.jar /tmp/bindings/datadog-java-agent/dd-java-agent.jar
-                    echo "dd-java-agent.jar" > /tmp/bindings/datadog-java-agent/env/BPL_JAVAAGENT
-                '''
-            }
-        }
 
         stage('Build com Maven + Paketo (Native Image)') {
             steps {
                 dir('orquestrador-java-21-graalvm') {
-                    sh '''
+                    sh """
                         chmod +x ./mvnw
-                        ./mvnw spring-boot:build-image \
-                            -Pnative \
-                            -Dspring-boot.build-image.imageName=$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
-                            -Dspring-boot.build-image.bindings=/tmp/bindings \
+                        ./mvnw spring-boot:build-image \\
+                            -Pnative-teste \\
+                            -Dspring-boot.build-image.imageName=${IMAGE_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} \\
                             -DskipTests
-                    '''
+                    """
                 }
             }
         }
