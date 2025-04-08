@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.24</version>
+    <version>1.0.25</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -59,6 +59,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.github.jnr</groupId>
+            <artifactId>jnr-unixsocket</artifactId>
+            <version>0.38.20</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -111,11 +117,16 @@
                         <configuration>
                             <mainClass>orquestrador.graalvm.Application</mainClass>
                             <buildArgs>
+                                <buildArg>-Ddd.profiling.enabled=true</buildArg>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
+                                <buildArg>--initialize-at-build-time=jnr.unixsocket.UnixSocketChannel</buildArg>
+                                <buildArg>--enable-all-security-services</buildArg>
+                                <buildArg>--enable-url-protocols=http,https</buildArg>
                                 <buildArg>-J-javaagent:/home/jenkins-agent/dd-java-agent.jar</buildArg>
                             </buildArgs>
                         </configuration>
+
                     </plugin>
                 </plugins>
             </build>
