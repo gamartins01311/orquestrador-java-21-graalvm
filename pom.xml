@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.25</version>
+    <version>1.0.26</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -121,6 +121,8 @@
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--allow-incomplete-classpath</buildArg>
                                 <buildArg>--initialize-at-run-time=jnr.unixsocket.UnixSocketChannel</buildArg>
+                                <buildArg>--initialize-at-run-time=jnr.constants.platform.Shutdown</buildArg>
+                                <buildArg>--initialize-at-run-time=jnr.unixsocket,jnr.constants</buildArg>
                                 <buildArg>--enable-all-security-services</buildArg>
                                 <buildArg>--enable-url-protocols=http,https</buildArg>
                                 <buildArg>-J-javaagent:/home/jenkins-agent/dd-java-agent.jar</buildArg>

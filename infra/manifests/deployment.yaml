@@ -19,15 +19,17 @@ spec:
         app: orquestrador-java-21
         tags.datadoghq.com/env: prod
         tags.datadoghq.com/service: orquestrador-java
-        tags.datadoghq.com/version: "1.0.25"
+        tags.datadoghq.com/version: "1.0.26"
         admission.datadoghq.com/enabled: "true"
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.25
+          image: localhost:5000/orquestrador.java.21:1.0.26
           ports:
             - containerPort: 8080
           env:
+            - name: DD_TRACE_AGENT_URL
+              value: "http://datadog.datadog.svc.cluster.local:8126"
             - name: DD_AGENT_HOST
               value: "datadog.datadog.svc.cluster.local"
             - name: DD_TRACE_AGENT_PORT
@@ -37,7 +39,7 @@ spec:
             - name: DD_SERVICE
               value: "orquestrador-java"
             - name: DD_VERSION
-              value: "1.0.25"
+              value: "1.0.26"
             - name: DD_PROFILING_ENABLED
               value: "true"
             - name: DD_LOGS_INJECTION
