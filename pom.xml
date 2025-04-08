@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.27</version>
+    <version>1.0.28</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -89,9 +89,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.4.4</version>
                 <configuration>
-                    <aot>true</aot>
+                    <image>
+                        <cleanCache>true</cleanCache>
+                        <env>
+                            <BP_DATADOG_ENABLED>true</BP_DATADOG_ENABLED>
+                        </env>
+                    </image>
                 </configuration>
             </plugin>
         </plugins>
