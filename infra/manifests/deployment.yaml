@@ -19,12 +19,12 @@ spec:
         app: orquestrador-java-21
         tags.datadoghq.com/env: prod
         tags.datadoghq.com/service: orquestrador-java
-        tags.datadoghq.com/version: "1.0.28"
+        tags.datadoghq.com/version: "1.0.29"
         admission.datadoghq.com/enabled: "true"
     spec:
       containers:
         - name: orquestrador-java-21
-          image: localhost:5000/orquestrador.java.21:1.0.28
+          image: localhost:5000/orquestrador.java.21:1.0.29
           ports:
             - containerPort: 8080
           env:

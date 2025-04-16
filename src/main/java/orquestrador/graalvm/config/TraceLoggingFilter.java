@@ -20,7 +20,6 @@ public class TraceLoggingFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Gera ou reutiliza um traceId fake para logs
         String traceId = request.getHeader("X-Trace-Id");
         if (traceId == null || traceId.isEmpty()) {
             traceId = UUID.randomUUID().toString();

@@ -16,8 +16,8 @@ cpfs=(
 total_time_vt=0
 count_vt=0
 
-total_time_novt=0
-count_novt=0
+#total_time_novt=0
+#count_novt=0
 
 function make_request {
   local url=$1
@@ -35,15 +35,15 @@ function make_request {
   echo "$response_time"
 }
 
-for round in {1..10}; do
+for round in {1..100}; do
   for cpf in "${cpfs[@]}"; do
-    time_novt=$(make_request "http://192.168.15.28/orquestrador/api/java21/contratos/novt/$cpf")
-    total_time_novt=$((total_time_novt + time_novt))
-    count_novt=$((count_novt + 1))
-    if (( count_novt % 10 == 0 )); then
-      avg_novt=$((total_time_novt / count_novt))
-      echo "[Preview-SemVirtualThread] /contratos/novt => $count_novt chamadas, média atual: ${avg_novt}ms"
-    fi
+#    time_novt=$(make_request "http://192.168.15.28/orquestrador/api/java21/contratos/novt/$cpf")
+#    total_time_novt=$((total_time_novt + time_novt))
+#    count_novt=$((count_novt + 1))
+#    if (( count_novt % 10 == 0 )); then
+#      avg_novt=$((total_time_novt / count_novt))
+#      echo "[Preview-SemVirtualThread] /contratos/novt => $count_novt chamadas, média atual: ${avg_novt}ms"
+#    fi
 
     time_vt=$(make_request "http://192.168.15.28/orquestrador/api/java21/contratos/vt/$cpf")
     total_time_vt=$((total_time_vt + time_vt))
@@ -58,12 +58,12 @@ for round in {1..10}; do
 done
 
 avg_time_vt=$((total_time_vt / count_vt))
-avg_time_novt=$((total_time_novt / count_novt))
+#avg_time_novt=$((total_time_novt / count_novt))
 
 echo -e "\nResumo Final - Tempo de Resposta (em milissegundos)"
 echo -e "------------------------------------------------------"
 echo -e "| Endpoint              | Total Chamadas | Tempo Médio |"
 echo -e "------------------------------------------------------"
 echo -e "| /contratos/vt         | $count_vt           | ${avg_time_vt} ms    |"
-echo -e "| /contratos/novt       | $count_novt         | ${avg_time_novt} ms    |"
+#echo -e "| /contratos/novt       | $count_novt         | ${avg_time_novt} ms    |"
 echo -e "------------------------------------------------------"

@@ -21,7 +21,7 @@ public class DatadogMetricsConfig {
         DatadogConfig config = new DatadogConfig() {
             @Override
             public String get(String key) {
-                return null; // usa os valores padrão
+                return null;
             }
 
             @Override
@@ -41,7 +41,7 @@ public class DatadogMetricsConfig {
 
             @Override
             public Duration step() {
-                return props.getStep(); // CORRETO AGORA
+                return props.getStep();
             }
         };
 
