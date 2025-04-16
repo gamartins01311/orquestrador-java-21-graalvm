@@ -7,6 +7,7 @@ import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import io.micrometer.core.instrument.binder.system.UptimeMetrics;
+import io.micrometer.java21.instrument.binder.jdk.VirtualThreadMetrics;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.annotation.PostConstruct;
@@ -28,5 +29,6 @@ public class MicrometerConfig {
         new ProcessorMetrics().bindTo(meterRegistry);
         new JvmThreadMetrics().bindTo(meterRegistry);
         new UptimeMetrics().bindTo(meterRegistry);
+        new VirtualThreadMetrics().bindTo(meterRegistry);
     }
 }
