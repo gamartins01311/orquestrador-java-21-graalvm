@@ -29,6 +29,5 @@ public class MicrometerConfig {
         new ProcessorMetrics().bindTo(meterRegistry);
         new JvmThreadMetrics().bindTo(meterRegistry);
         new UptimeMetrics().bindTo(meterRegistry);
-        new VirtualThreadMetrics().bindTo(meterRegistry);
     }
 }

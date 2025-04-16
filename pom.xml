@@ -12,7 +12,7 @@
 
     <groupId>orquestrador</groupId>
     <artifactId>orquestrador.java.21</artifactId>
-    <version>1.0.30</version>
+    <version>1.0.31</version>
     <name>orquestrador.java.21</name>
     <description>Orquestrador de testes POC java 21 com Spring Boot</description>
 
@@ -99,13 +99,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <env>
-                            <BP_NATIVE_BUILD_ARGTUMENTS>
-                                -H:+AllowVmInspection
-                                -XX:+FlightRecorder
-                                -XX:StartFlightRecording="filename=recording.jfr"
-                            </BP_NATIVE_BUILD_ARGTUMENTS>
-                        </env>
                         <cleanCache>true</cleanCache>
                     </image>
                 </configuration>
@@ -124,11 +117,6 @@
                             <configuration>
                                 <image>
                                     <env>
-                                        <BP_NATIVE_BUILD_ARGTUMENTS>
-                                            -H:+AllowVmInspection
-                                            -XX:+FlightRecorder
-                                            -XX:StartFlightRecording="filename=recording.jfr"
-                                        </BP_NATIVE_BUILD_ARGTUMENTS>
                                         <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                     </env>
                                 </image>
